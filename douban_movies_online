@@ -1,0 +1,19 @@
+import requests
+from bs4 import BeautifulSoup
+
+def movie_info(url):
+    rq = requests.get(url)
+    Soup = BeautifulSoup(rq.text, 'lxml') #预处理
+    
+    movies = Soup.find_all('li', class_ = "list-item")
+    
+    for movie in movies:
+        info = movie.attrs #不了解html属性，把属性单独取出来就好了
+        #print(name)
+        name = info['data-title']
+        director = info['data-director']
+        actors = info['data-actors']
+        #score = info['data-score']
+        print("电影名称", name, "导演", director, "演员", actors, "评分", score)
+    
+movie_info('https://movie.douban.com/nowplaying/wuxi/')    
